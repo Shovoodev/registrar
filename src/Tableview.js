@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.min.css';  
 import Table from 'react-bootstrap/Table';
+import Swal from 'sweetalert2'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import EditUpdate from  "./EditUpdate"
+
+
+
 export default function Tableview() {
   const [array, setArray] = useState([]);
   const [bolin, setBolin] = useState(false);
@@ -20,10 +25,24 @@ export default function Tableview() {
     setArray([...array, { name, number, classView }]);
     setInputdata({ name: "", number: "", classView: "" });
     localStorage.setItem("students",  JSON.stringify([...array, { name, number, classView }]));
+    Swal.fire({
+      position: 'middle',
+      icon: 'success',
+      title: 'Your work has been saved',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
   function deletedata(i) {
+    
     let total = [...array];
     total.splice(i, 1);
+    
+  Swal.fire({
+    title: 'Delete!',
+    text: 'Entery has been deleted',
+    icon: 'error',
+  })
     setArray(total);
     localStorage.setItem("students", JSON.stringify(total));
   }
@@ -58,12 +77,12 @@ export default function Tableview() {
       </Form.Group>
       
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label>Name</Form.Label>
+        <Form.Label>Roll Number</Form.Label>
         <Form.Control  size="sm" name="number" type="text" value={number}  placeholder="enter name" onChange={data}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label>Name</Form.Label>
+        <Form.Label>Class</Form.Label>
         <Form.Control  size="sm" name="classView" type="text" value={classView}  placeholder="enter name" onChange={data}/>
       </Form.Group>
       </Form>
@@ -89,18 +108,13 @@ export default function Tableview() {
                   <td>{item.number}</td>
                   <td> {item.classView}</td>
                   <td>
-                    {" "}
                     <button
-                      onClick={() => {
-                        deletedata(i);
-                      }}
-                    >
+                      onClick={() => { deletedata(i)}} >
                       <i class="fa-solid fa-trash"></i>
-                    </button>{" "}
+                    </button >
                   </td>
                   <td>
-                    {" "}
-                    <button onClick={() => undateData(i)}> <i class="fa-solid fa-pen-to-square"></i></button>{" "}
+                    <EditUpdate  onClick={() => undateData(i)}/>
                   </td>
                 </tr>
               );
