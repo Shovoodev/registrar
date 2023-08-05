@@ -4,13 +4,11 @@ import Table from 'react-bootstrap/Table';
 import Swal from 'sweetalert2'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import EditUpdate from  "./EditUpdate"
-
 
 
 export default function Tableview() {
   const [array, setArray] = useState([]);
-  const [bolin, setBolin] = useState(false);
+  const [bool, setBool] = useState(false);
   let [index,setIndex]=useState()
   const [inputdata, setInputdata] = useState({
     name: "",
@@ -49,14 +47,14 @@ export default function Tableview() {
   function undateData(i) {
     let { name, number, classView } = array[i];
     setInputdata({ name, number, classView });
-    setBolin(true);
+    setBool(true);
     setIndex(i)
   }
   function updateinfo() {
     let total = [...array];
     total.splice(index, 1, { name, number, classView });
     setArray(total);
-    setBolin(false);
+    setBool(false);
     localStorage.setItem("students", JSON.stringify(total));
     setInputdata({ name: "", number: "", classView: "" });
   }
@@ -67,7 +65,7 @@ export default function Tableview() {
 
   return (
     
-    <div className="field">
+    <div class="container">
       <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label>Name</Form.Label>
@@ -78,20 +76,21 @@ export default function Tableview() {
       
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label>Roll Number</Form.Label>
-        <Form.Control  size="sm" name="number" type="text" value={number}  placeholder="enter name" onChange={data}/>
+        <Form.Control  size="sm" name="number" type="text" value={number}  placeholder="enter roll number" onChange={data}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label>Class</Form.Label>
-        <Form.Control  size="sm" name="classView" type="text" value={classView}  placeholder="enter name" onChange={data}/>
+        <Form.Control  size="sm" name="classView" type="text" value={classView}  placeholder="enter class" onChange={data}/>
       </Form.Group>
       </Form>
-      <Button variant="secondary" size="lg" onClick={!bolin ? addinputdata : updateinfo}>
-        {!bolin ? `Add data` : `Update data`}</Button>
+      <Button variant="secondary" size="lg" onClick={!bool ? addinputdata : updateinfo}>
+        {!bool ? `Add data` : `Update data`}</Button>
+        <div class="align-middle">
+        
+        </div>
 
-      <br />
-
-      <Table class="table table-bordered">
+      <Table striped bordered hover  >
         <tbody>
           <tr className="item">
             <th scope="col">Name</th>
@@ -114,7 +113,7 @@ export default function Tableview() {
                     </button >
                   </td>
                   <td>
-                    <EditUpdate  onClick={() => undateData(i)}/>
+                    <button  onClick={() => {undateData(i)}}><i className="fa-solid fa-pen-to-square"></i></button>
                   </td>
                 </tr>
               );
