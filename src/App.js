@@ -1,8 +1,10 @@
-import Table from "./Table";
+import Tableview from "./Tableview";
+import Topbar from  "./nav/Topbar"
 export default function App() {
   return (
     <div className="App">
-      <Table />
+      <Topbar/>
+      <Tableview />
     </div>
   );
 }
